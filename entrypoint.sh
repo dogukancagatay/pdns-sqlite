@@ -68,6 +68,7 @@ else
 fi
 
 # Set correct permissions
+chown -Rv pdns:pdns /data
 chown -Rv pdns:pdns ${SQLITE_DBPATH}
 
 # Start PowerDNS
