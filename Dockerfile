@@ -13,8 +13,9 @@ RUN mkdir /pdns
 COPY ./entrypoint.sh /pdns/entrypoint.sh
 COPY ./init.sql /pdns/init.sql
 RUN mkdir /data
+RUN chown -Rv pdns: /data
 
-WORKDIR /pdns
+WORKDIR /data
 
 VOLUME ["/data"]
 EXPOSE 53/udp 53/tcp

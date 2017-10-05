@@ -67,5 +67,8 @@ else
   echo "Assuming this is not the first launch"
 fi
 
+# Set correct permissions
+chown -Rv pdns:pdns ${SQLITE_DBPATH}
+
 # Start PowerDNS
 pdns_server ${OPTIONS}
