@@ -61,7 +61,7 @@ fi
 # Init the sqlite db if it does not exist
 if [[ ! -e ${SQLITE_DBPATH} ]]
 then
-  cat init.sql | sqlite3 ${SQLITE_DBPATH}
+  cat /pdns/init.sql | sqlite3 ${SQLITE_DBPATH}
 else
   echo "Database exist and some tables were found."
   echo "Assuming this is not the first launch"
