@@ -11,6 +11,7 @@ DEFAULT_SOA_MAIL=${DEFAULT_SOA_MAIL}
 ALLOW_AXFR_IPS=${ALLOW_AXFR_IPS:-127.0.0.0/8}
 ALSO_NOTIFY=${ALSO_NOTIFY}
 ALLOW_NOTIFY_FROM=${ALLOW_NOTIFY_FROM}
+GSQLITE3_PRAGMA_SYNCHRONOUS=${GSQLITE3_PRAGMA_SYNCHRONOUS:-0}
 
 OPTIONS=()
 OPTIONS+="--api=yes "
@@ -21,6 +22,7 @@ OPTIONS+="--launch=gsqlite3 "
 OPTIONS+="--gsqlite3-database=${SQLITE_DBPATH} "
 OPTIONS+="--gsqlite3-pragma-foreign-keys "
 OPTIONS+="--gsqlite3-dnssec "
+OPTIONS+="--gsqlite3-pragma-synchronous=${GSQLITE3_PRAGMA_SYNCHRONOUS} "
 OPTIONS+="--default-ttl=${DEFAULT_TTL} "
 OPTIONS+="--default-soa-name=${DEFAULT_SOA_NAME} "
 OPTIONS+="--allow-axfr-ips=${ALLOW_AXFR_IPS} "

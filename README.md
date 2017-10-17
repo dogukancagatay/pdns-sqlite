@@ -16,6 +16,7 @@ PowerDNS instance using SQLite3
 * `ALLOW_AXFR_IPS`: https://doc.powerdns.com/md/authoritative/settings/#allow-axfr-ips, default value `127.0.0.0/8`
 * `ALSO_NOTIFY`: https://doc.powerdns.com/md/authoritative/settings/#also-notify
 * `ALLOW_NOTIFY_FROM`: Allow AXFR NOTIFY from these IP ranges. Setting this to an empty string will drop all incoming notifies.
+* `GSQLITE3_PRAGMA_SYNCHRONOUS`: Set this to `0` to disable synchronous write to the SQLite DB, to `1` enable synchronous write
 
 ### Docker compose example
 
