@@ -1,2 +1,4 @@
 data
 notes.md
+docker-bake.hcl
+build.sh
