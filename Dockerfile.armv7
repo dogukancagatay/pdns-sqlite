@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM --platform=linux/arm/v7 debian:buster-slim
 
 # Build date (format 2020-02-12T23:12:43Z)
 ARG BUILD_DATE=""
@@ -31,13 +31,17 @@ RUN apt-get update && apt-get install --yes \
     sqlite3 \
     gnupg2
 
-RUN echo 'deb [arch=amd64] http://repo.powerdns.com/debian buster-auth-44 main' > /etc/apt/sources.list.d/pdns.list && \
-    echo -n 'Package: pdns-*\nPin: origin repo.powerdns.com\nPin-Priority: 600\n' > /etc/apt/preferences.d/pdns && \
-    curl 'https://repo.powerdns.com/FD380FBB-pub.asc' | apt-key add -
+# RUN echo 'deb http://repo.powerdns.com/raspbian buster-rec-44 main' > /etc/apt/sources.list.d/pdns.list && \
+#     echo -e 'Package: pdns-*\nPin: origin repo.powerdns.com\nPin-Priority: 600\n' > /etc/apt/preferences.d/pdns && \
+#     curl 'https://repo.powerdns.com/FD380FBB-pub.asc' | apt-key add -
 
-RUN apt-get update && apt-get install --yes \
-    pdns-server=${PDNS_VERSION} \
-    pdns-backend-sqlite3=${PDNS_VERSION} && \
+RUN curl -fLk "https://repo.powerdns.com/raspbian/pool/main/p/pdns/pdns-server_${PDNS_VERSION}_armhf.deb" -o /tmp/pdns-server.deb && \
+    dpkg -i /tmp/pdns-server.deb; \
+    apt-get install -f -y && \
+    curl -fLk "https://repo.powerdns.com/raspbian/pool/main/p/pdns/pdns-backend-sqlite3_${PDNS_VERSION}_armhf.deb" -o /tmp/pdns-backend-sqlite3.deb && \
+    dpkg -i /tmp/pdns-backend-sqlite3.deb; \
+    apt-get install -f -y && \
+    rm -rf /tmp/pdns-*.deb && \
     rm -rf /etc/powerdns/pdns.d/bind.conf && \
     apt-get autoremove -y && \
     apt-get autoclean && \
