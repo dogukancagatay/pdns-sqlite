@@ -21,17 +21,15 @@ CREATE TABLE records (
   content               VARCHAR(65535) DEFAULT NULL,
   ttl                   INTEGER DEFAULT NULL,
   prio                  INTEGER DEFAULT NULL,
-  change_date           INTEGER DEFAULT NULL,
   disabled              BOOLEAN DEFAULT 0,
   ordername             VARCHAR(255),
   auth                  BOOL DEFAULT 1,
   FOREIGN KEY(domain_id) REFERENCES domains(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE INDEX rec_name_index ON records(name);
-CREATE INDEX nametype_index ON records(name,type);
-CREATE INDEX domain_id ON records(domain_id);
-CREATE INDEX orderindex ON records(ordername);
+CREATE INDEX records_lookup_idx ON records(name, type);
+CREATE INDEX records_lookup_id_idx ON records(domain_id, name, type);
+CREATE INDEX records_order_idx ON records(domain_id, ordername);
 
 
 CREATE TABLE supermasters (
@@ -54,8 +52,7 @@ CREATE TABLE comments (
   FOREIGN KEY(domain_id) REFERENCES domains(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE INDEX comments_domain_id_index ON comments (domain_id);
-CREATE INDEX comments_nametype_index ON comments (name, type);
+CREATE INDEX comments_idx ON comments(domain_id, name, type);
 CREATE INDEX comments_order_idx ON comments (domain_id, modified_at);
 
 
@@ -75,6 +72,7 @@ CREATE TABLE cryptokeys (
  domain_id              INT NOT NULL,
  flags                  INT NOT NULL,
  active                 BOOL,
+ published              BOOL DEFAULT 1,
  content                TEXT,
  FOREIGN KEY(domain_id) REFERENCES domains(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

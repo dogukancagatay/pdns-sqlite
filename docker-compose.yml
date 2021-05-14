@@ -1,0 +1,24 @@
+version: "3"
+services:
+
+  pdns:
+    build: ./
+    image: dcagatay/pdns-sqlite:latest
+    volumes:
+      - ./data/pdns:/data
+    ports:
+      - 127.0.0.10:53:53/udp
+      - 8081:8081
+    environment:
+      API_KEY: "changeme"
+      DEFAULT_SOA_NAME: "ns1.yourdomain.com"
+    restart: unless-stopped
+
+  web:
+    image: ngoduykhanh/powerdns-admin:latest
+    environment:
+      SECRET_KEY: "a-very-secret-key"
+    volumes:
+      - ./data/web:/data
+    ports:
+      - 9191:80
