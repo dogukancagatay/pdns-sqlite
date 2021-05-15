@@ -1,24 +1,32 @@
 # pdns-sqlite
 
-Docker image for PowerDNS using SQLite3.
+Docker image for PowerDNS Authoritative Server with SQLite3 backend.
 
-### Environment variables
+PowerDNS actually have official Docker images ([powerdns](https://hub.docker.com/r/powerdns)) but they are lacking builds for ARM based platforms.
+
+Images are availabe at Docker Hub ([dcagatay/pdns-sqlite](https://hub.docker.com/r/dcagatay/pdns-sqlite/)] built for *linux/amd64* and *linux/arm/v7* platforms.
+
+## Available Tags
+
+- `latest`, `4.4.1`
+
+## Environment variables
 
 * `API_KEY`: Your API key, Default: `changeme`
 * `MASTER`: Is your instance a master, Default: `yes`
 * `SLAVE`: Is your instance a slave, it can't be both master and slave, Default: `no`
 * `DEFAULT_TTL`: TTL to use when no one is provided, default value `3600`
-* `SLAVE_CYCLE_INTERVAL`: Check powerdns documentation (https://doc.powerdns.com/md/authoritative/settings/#slave-cycle-interval), Default: `60`
+* `SLAVE_CYCLE_INTERVAL`: https://doc.powerdns.com/md/authoritative/settings/#slave-cycle-interval, Default: `60`
 * `ALLOW_AXFR_IPS`: https://doc.powerdns.com/md/authoritative/settings/#allow-axfr-ips, Default: `0.0.0.0/0,::/0`
 * `WEBSERVER_ALLOW_IPS`: https://doc.powerdns.com/md/authoritative/settings/#webserver-allow-ips, Default: `0.0.0.0/0,::/0`
 * `GSQLITE3_PRAGMA_SYNCHRONOUS`: Set this to `0` to disable synchronous write to the SQLite DB, Default: `1`
 
-* `DEFAULT_SOA_NAME`: https://doc.powerdns.com/md/authoritative/settings/#default-soa-name, default `$(hostname -f)`
+* `DEFAULT_SOA_NAME`: https://doc.powerdns.com/md/authoritative/settings/#default-soa-name, Default: `$(hostname -f)`
 * `ALSO_NOTIFY`: https://doc.powerdns.com/md/authoritative/settings/#also-notify
 * `ALLOW_NOTIFY_FROM`: Allow AXFR NOTIFY from these IP ranges. Setting this to an empty string will drop all incoming notifies.
 
 
-### Docker compose example
+## docker-compose Example
 
 ```
 version: "3"
